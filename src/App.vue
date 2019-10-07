@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <h2>💚 Vue.js Composition API 💚</h2>
+    <p>Check out the <a href="https://github.com/n1ckdm/vue-logo-comp-api">source code</a></p>
     <Logo />
   </div>
 </template>
