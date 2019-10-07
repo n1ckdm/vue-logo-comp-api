@@ -11,7 +11,7 @@ class Particle {
     this.target = target;
     this.acc = [0, 0];
     this.maxForce = 1;
-    this.maxSpeed = 5;
+    this.maxSpeed = 8;
     this.vel = [(Math.random() * 2 - 1) * this.maxSpeed, (Math.random() * 2 - 1) * this.maxSpeed];
   }
 
@@ -27,40 +27,50 @@ class Particle {
     ];
     const dist = Math.sqrt(Math.pow(desired[0], 2) + Math.pow(desired[1], 2));
     let speed = this.maxSpeed;
-    if (dist < 100) {
-      speed = this.scaleInRange(dist, 0, 100, 0, this.maxSpeed);
+    if (dist < 200) {
+      speed = this.scaleInRange(dist, 0, 1000, 0, this.maxSpeed);
     }
     const steer = [
       desired[0] * speed - this.vel[0],
       desired[1] * speed - this.vel[1],
     ];
-    if (Math.abs(steer[0]) > this.maxForce) { steer[0] = this.maxForce * Math.sign(steer[0]); }
-    if (Math.abs(steer[1]) > this.maxForce) { steer[1] = this.maxForce * Math.sign(steer[1]); }
+    const mag = Math.sqrt(Math.pow(steer[0], 2) + Math.pow(steer[1], 2));
+    if (mag > this.maxForce) {
+      steer[0] = this.maxForce * Math.sign(steer[0]);
+      steer[1] = this.maxForce * Math.sign(steer[1]);
+    }
     return steer;
   }
 
   public flee(target: number[]) {
-    const desired = [
-      -(target[0] - this.pos[0]),
-      -(target[1] - this.pos[1]),
+    if (target[0] === 0 && target[1] === 0) {
+      return [0, 0];
+    }
+    let desired = [
+      (target[0] - this.pos[0]) * -1,
+      (target[1] - this.pos[1]) * -1,
     ];
     const dist = Math.sqrt(Math.pow(desired[0], 2) + Math.pow(desired[1], 2));
     if (dist > 50) {
       return [0, 0];
     }
+    desired = [desired[0] * -1, desired[1] * -1];
     const steer = [
-      desired[0] * this.maxSpeed - this.vel[0],
-      desired[1] * this.maxSpeed - this.vel[1],
+      (desired[0] - this.vel[0]),
+      (desired[1] - this.vel[1]),
     ];
-    if (Math.abs(steer[0]) > this.maxForce) { steer[0] = this.maxForce * Math.sign(steer[0]); }
-    if (Math.abs(steer[1]) > this.maxForce) { steer[1] = this.maxForce * Math.sign(steer[1]); }
+    const mag = Math.sqrt(Math.pow(steer[0], 2) + Math.pow(steer[1], 2));
+    if (mag > this.maxForce) {
+      steer[0] = this.maxForce * Math.sign(steer[0]);
+      steer[1] = this.maxForce * Math.sign(steer[1]);
+    }
     return steer;
   }
 
   public behaviours(fleeTarget: number[]) {
     const flee = this.flee(fleeTarget);
     this.applyForce(this.arrive());
-    this.applyForce(this.flee([flee[0] * 5, flee[1] * 5]));
+    this.applyForce([flee[0] * 5, flee[1] * 5]);
   }
 
   public applyForce(force: number[]) {

@@ -1,12 +1,13 @@
 import { ref, onMounted, onUnmounted } from '@vue/composition-api';
 
 export function useMousePosition() {
-  const x = ref(0);
-  const y = ref(0);
+  const x = ref(200);
+  const y = ref(200);
 
   function update(e: MouseEvent) {
-    x.value = e.pageX;
-    y.value = e.pageY;
+    const ele: HTMLElement = document.getElementById('svg') as HTMLElement;
+    x.value = e.pageX - ele.getBoundingClientRect().left - 200;
+    y.value = e.pageY - ele.getBoundingClientRect().top - 200;
   }
 
   onMounted(() => {

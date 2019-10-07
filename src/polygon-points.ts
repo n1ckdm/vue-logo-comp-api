@@ -6,6 +6,7 @@ class PolygonPoints {
   private polygon: Array<[number, number]> = [];
 
   constructor(polygonPoints: Array<[number, number]>, points: number = 100) {
+
     this.polygon = polygonPoints.map((p) => [p[0], p[1]]);
 
     const ar = this.height() / this.width();
@@ -58,11 +59,7 @@ class PolygonPoints {
   }
 
   public getParticles() {
-    return this.particles.map((p) => [p.pos[0], p.pos[1]]);
-  }
-
-  public pointsStr() {
-    return this.polygon.map((point) => `${point[0]},${point[1]}`).join(' ');
+    return this.particles;
   }
 }
 

@@ -1,19 +1,20 @@
 <template>
   <div>
-    <svg width="400" height="400">
+    <svg id="svg" width="600" height="600" viewBox="-200 -200 600 600">
+      {{outerParticles}}{{innerParticles}}
       <circle
-        v-for="point in outerParticles"
-        :key="`${point[0]}${point[1]}`"
-        :cx="point[0]"
-        :cy="point[1]"
+        v-for="point in outerParticles.getParticles()"
+        :key="`${point}${point.pos[0]}outer`"
+        :cx="point.pos[0]"
+        :cy="point.pos[1]"
         :r="pSize"
         fill="#42b883"
       />
       <circle
-        v-for="point in innerParticles"
-        :key="`${point[0]}${point[1]}`"
-        :cx="point[0]"
-        :cy="point[1]"
+        v-for="point in innerParticles.getParticles()"
+        :key="`${point}${point.pos[0]}inner`"
+        :cx="point.pos[0]"
+        :cy="point.pos[1]"
         :r="pSize"
         fill="#35495e"
       />

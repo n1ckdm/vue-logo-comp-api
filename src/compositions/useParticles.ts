@@ -11,7 +11,7 @@ export function useParticles(updateInterval: number) {
     [121, 0],
     [98, 40],
     [75, 0],
-  ], 30);
+  ], 20);
 
   const outer = new PolygonPoints([
     [0, 0],
@@ -20,10 +20,10 @@ export function useParticles(updateInterval: number) {
     [157, 0],
     [98, 102],
     [39, 0],
-  ], 40);
+  ], 30);
 
-  const innerParticles = ref(inner.getParticles());
-  const outerParticles = ref(outer.getParticles());
+  const innerParticles = ref(inner);
+  const outerParticles = ref(outer);
 
   const {x, y} = useMousePosition();
 
@@ -31,8 +31,8 @@ export function useParticles(updateInterval: number) {
     setInterval(() => {
       inner.update([x.value, y.value]);
       outer.update([x.value, y.value]);
-      innerParticles.value = inner.getParticles();
-      outerParticles.value = outer.getParticles();
+      innerParticles.value = inner;
+      outerParticles.value = outer;
     }, updateInterval);
   });
 
