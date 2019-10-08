@@ -30,7 +30,7 @@ import PolygonPoints from '@/polygon-points';
 
 export default Vue.extend({
   setup() {
-    const { innerParticles, outerParticles } = useParticles(100);
+    const { innerParticles, outerParticles } = useParticles(5);
     const pSize = 6;
 
     return {

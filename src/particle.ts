@@ -11,7 +11,7 @@ class Particle {
     this.target = target;
     this.acc = [0, 0];
     this.maxForce = 1;
-    this.maxSpeed = 8;
+    this.maxSpeed = 2;
     this.vel = [(Math.random() * 2 - 1) * this.maxSpeed, (Math.random() * 2 - 1) * this.maxSpeed];
   }
 
@@ -28,7 +28,7 @@ class Particle {
     const dist = Math.sqrt(Math.pow(desired[0], 2) + Math.pow(desired[1], 2));
     let speed = this.maxSpeed;
     if (dist < 200) {
-      speed = this.scaleInRange(dist, 0, 1000, 0, this.maxSpeed);
+      speed = this.scaleInRange(dist, 0, 1500, 0, this.maxSpeed);
     }
     const steer = [
       desired[0] * speed - this.vel[0],
